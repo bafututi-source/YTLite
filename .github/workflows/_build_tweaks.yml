@@ -87,8 +87,11 @@ jobs:
 
       - name: Download roothide headers
         run: |
-          git clone --quiet --depth=1 --recurse-submodules https://github.com/roothide/theos roothide-theos
-          cp -r roothide-theos/vendor/include/. $THEOS/vendor/include/
+          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/roothide/theos roothide-theos
+          cd roothide-theos
+          git sparse-checkout set --no-cone vendor/include
+          git checkout
+          cp -r vendor/include/. $THEOS/vendor/include/
 
       - name: Checkout YTLite source
         uses: actions/checkout@v4
