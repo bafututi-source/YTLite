@@ -113,8 +113,8 @@ jobs:
 
       - name: Download roothide header
         run: |
-          sudo curl -L https://github.com/roothide/theos/raw/master/vendor/include/roothide.h \
-            -o $THEOS/vendor/include/roothide.h
+          git clone --quiet --depth=1 --recurse-submodules https://github.com/roothide/theos roothide-theos
+          cp -r roothide-theos/vendor/include/. $THEOS/vendor/include/
             
       - name: Build YouTube Plus from source
         run: |
