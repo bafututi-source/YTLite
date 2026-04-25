@@ -85,22 +85,28 @@ jobs:
           git checkout
           mv *.sdk $THEOS/sdks
 
+      - name: Download roothide headers
+        run: |
+          git clone --quiet --depth=1 --recurse-submodules https://github.com/roothide/theos roothide-theos
+          cp -r roothide-theos/vendor/include/. $THEOS/vendor/include/
+
       - name: Checkout YTLite source
         uses: actions/checkout@v6
         with:
           path: YTLite-src
 
-      - name: Clone YouTubeHeader
+      - name: Clone YouTubeHeader (sibling of source)
         run: |
-          if [ -d "$THEOS/include/YouTubeHeader" ]; then
-            cd $THEOS/include/YouTubeHeader && git pull
-          else
-            cd $THEOS/include && git clone --quiet --depth=1 https://github.com/PoomSmart/YouTubeHeader.git
-          fi
-          if [ "${{ inputs.enable_demc }}" = "true" ]; then
-            rm -rf "$THEOS/include/YTHeaders"
-            cp -r "$THEOS/include/YouTubeHeader" "$THEOS/include/YTHeaders"
-          fi
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/YouTubeHeader.git
+
+      - name: Clone protobuf (sibling of source)
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/protocolbuffers/protobuf.git
+          cd protobuf
+          git sparse-checkout set --no-cone objectivec
+          git checkout
 
       - name: Clone PSHeader
         if: ${{ inputs.enable_youpip || inputs.enable_ytuhd || inputs.enable_yq || inputs.enable_ryd || inputs.enable_ytabc || inputs.enable_demc }}
@@ -111,11 +117,6 @@ jobs:
             cd $THEOS/include && git clone --quiet --depth=1 https://github.com/PoomSmart/PSHeader.git
           fi
 
-      - name: Download roothide header
-        run: |
-          git clone --quiet --depth=1 --recurse-submodules https://github.com/roothide/theos roothide-theos
-          cp -r roothide-theos/vendor/include/. $THEOS/vendor/include/
-            
       - name: Build YouTube Plus from source
         run: |
           cd YTLite-src
