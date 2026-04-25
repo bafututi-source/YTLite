@@ -103,7 +103,7 @@ jobs:
       - name: Clone protobuf (sibling of source)
         run: |
           cd ${{ github.workspace }}
-          git clone --quiet --depth=1 https://github.com/protocolbuffers/protobuf.git
+          git clone --quiet --depth=1 https://github.com/nickcoutsos/protobuf-objc.git protobuf
 
       - name: Clone PSHeader
         if: ${{ inputs.enable_youpip || inputs.enable_ytuhd || inputs.enable_yq || inputs.enable_ryd || inputs.enable_ytabc || inputs.enable_demc }}
