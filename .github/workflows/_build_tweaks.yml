@@ -111,6 +111,11 @@ jobs:
             cd $THEOS/include && git clone --quiet --depth=1 https://github.com/PoomSmart/PSHeader.git
           fi
 
+      - name: Download roothide header
+        run: |
+          sudo curl -L https://github.com/roothide/theos/raw/master/vendor/include/roothide.h \
+            -o $THEOS/vendor/include/roothide.h
+            
       - name: Build YouTube Plus from source
         run: |
           cd YTLite-src
