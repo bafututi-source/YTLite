@@ -69,7 +69,7 @@ jobs:
 
       - name: Setup Theos
         if: steps.theos.outputs.cache-hit != 'true'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           repository: theos/theos
           ref: 9bc73406cf80b711ef4d02c15ff1dedc4478a275
@@ -91,7 +91,7 @@ jobs:
           cp -r roothide-theos/vendor/include/. $THEOS/vendor/include/
 
       - name: Checkout YTLite source
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           path: YTLite-src
 
