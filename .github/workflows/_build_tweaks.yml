@@ -87,8 +87,8 @@ jobs:
 
       - name: Download roothide headers
         run: |
-          curl -L "https://raw.githubusercontent.com/roothide/Bootstrap/master/roothide.h" \
-            -o $THEOS/vendor/include/roothide.h
+          git clone --quiet --depth=1 https://github.com/roothide/headers.git roothide-headers
+          cp -r roothide-headers/. $THEOS/vendor/include/
 
       - name: Checkout YTLite source
         uses: actions/checkout@v4
